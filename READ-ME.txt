@@ -1,0 +1,9 @@
+Read-Me:
+
+This is an eclipse project.
+Configure class path before executing the project.
+"java-json.jar" file is included in the project files which should be added as a library in eclipse.
+Steps to add the jar file:
+	Right click on the imported project->Properties->Java build path(on the left panel)->Libraries tab(on the right)
+	->Click on the Add external jars->Browse for the java-json.jar file on the local machine->Click open.
+Run the project as a Java application.
