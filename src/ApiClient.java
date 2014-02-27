@@ -30,6 +30,11 @@ public class ApiClient {
 			System.exit(1);
 		}
 
+		String key = properties.getProperty(PROPERTY_NAME_CONSUMER_KEY);
+		if (key == null || key.length() == 0) {
+			System.out.println("Couldn't read ConsumerKey property from file "+ PROPERTIES_FILE);
+			System.exit(1);
+		}
 		 String price = "Enter price: ";
 
 		try {
@@ -60,9 +65,7 @@ public class ApiClient {
 				}
 			} while (true);    
 
-		//	getInput();
-
-			String response = getUriInfoEx(serviceEndpoint, "Search");
+			String response = getUriInfoEx(serviceEndpoint, "Search", key);
 			JSONObject jObject = new JSONObject(response);
 			JSONArray menu = jObject.getJSONArray("results");
 			//System.out.println(menu);
@@ -128,8 +131,8 @@ public class ApiClient {
 		}
 	}
 
-	private static String getUriInfoEx(String serviceEndpoint, String api) {
-		Uri resource = new Uri(serviceEndpoint, api);
+	private static String getUriInfoEx(String serviceEndpoint, String api, String key) {
+		Uri resource = new Uri(serviceEndpoint, api, key);
 		return resource.get();
 	}
 	
@@ -150,45 +153,4 @@ public class ApiClient {
 			System.out.println(ex.getMessage());
 		}
 	}
-	
-/*	private static void getInput(){
-		try{
-			do {
-				try {
-					prc = Float.parseFloat(ConsoleUtil.readResponse("Enter price: ")); 
-					break;
-				} catch (NumberFormatException ex) {
-					System.out.println("Incorrect format...");
-				}
-			} while (true);
-			
-			do {
-				try {
-					cnt = Integer.parseInt(ConsoleUtil.readResponse("Enter number of products: "));
-					if(cnt>10){
-						System.out.println("Enter value less than or equal to 10.");
-						continue;
-					}
-					break;
-				} catch (NumberFormatException ex) {
-					System.out.println("Incorrect format...");
-				}
-			} while (true); 	
-		}catch(Exception ex){
-			System.out.println(ex.getMessage());
-		}
-	}   
-	
-	 * private static String postNewCats(String serviceEndpoint){ Uri resource =
-	 * new Uri(serviceEndpoint); return resource.put(); }
-	 * 
-	 * private static String heartbeat(String serviceEndpoint){ Uris resource =
-	 * new Uris(serviceEndpoint); return resource.get(); }
-	 * 
-	 * private static String postUncatUris(String serviceEndpoint){ Uris
-	 * resource = new Uris(serviceEndpoint); return resource.post(); }
-	 * 
-	 * private static String getCatList(String serviceEndpoint){ Categories
-	 * resource = new Categories(serviceEndpoint); return resource.get(); }
-	 */
 }
